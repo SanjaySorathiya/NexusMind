@@ -138,10 +138,10 @@ function SignInForm() {
         <footer className="flex items-center justify-between p-6 text-xs text-muted-foreground">
           <span>© 2026 NexusMind Studio</span>
           <a
-            href="mailto:support@ragstudio.app"
+            href="mailto:support@nexusmind.com"
             className="transition-colors hover:text-foreground"
           >
-            support@ragstudio.app
+            support@nexusmind.com
           </a>
         </footer>
       </div>
@@ -153,7 +153,7 @@ function SignInForm() {
         />
         <div className="relative flex h-full flex-col justify-between p-10">
           <span className="font-mono text-[11px] tracking-wide text-muted-foreground">
-            01 — READ, ASK, REMEMBER
+            READ, ASK, REMEMBER
           </span>
           <div>
             <p className="max-w-md font-heading text-3xl leading-snug font-medium tracking-tight text-balance">
