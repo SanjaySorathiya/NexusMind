@@ -2,6 +2,7 @@
 
 import { AlertCircleIcon } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { siteConfig } from "@/lib/config"
 import { useUserQuota } from "@/hooks/use-user-quota"
 
 export function QuotaBanner({ className }: { className?: string }) {
@@ -22,7 +23,7 @@ export function QuotaBanner({ className }: { className?: string }) {
         </AlertTitle>
         <AlertDescription className="text-xs text-amber-700 dark:text-amber-300/90">
           You&apos;ve used all your {limitFormatted} free tokens. Thank you for
-          exploring NexusMind Studio!
+          exploring {siteConfig.name}!
         </AlertDescription>
       </Alert>
     </div>

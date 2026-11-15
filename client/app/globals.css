@@ -8,6 +8,14 @@
   --font-heading: Iowan Old Style, Palatino Linotype, Book Antiqua, Georgia, serif;
   --font-sans: Avenir Next, Avenir, Helvetica Neue, Arial, sans-serif;
   --font-mono: SFMono-Regular, Consolas, Liberation Mono, monospace;
+  --color-nx-bg: var(--nx-bg);
+  --color-nx-panel: var(--nx-panel);
+  --color-nx-line: var(--nx-line);
+  --color-nx-text: var(--nx-text);
+  --color-nx-muted: var(--nx-muted);
+  --color-nx-accent: var(--nx-accent);
+  --color-nx-accent-strong: var(--nx-accent-strong);
+  --color-nx-on-accent: var(--nx-on-accent);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -122,6 +130,50 @@
   --brand-from: oklch(0.7 0.1 35);
   --brand-via: oklch(0.7 0.1 35);
   --brand-to: oklch(0.7 0.1 35);
+}
+
+/* Public pages (landing + sign-in): deep green on paper / ink. Scoped so the
+   workspace app keeps its own palette. */
+.nx {
+  /* Public pages reuse the app theme tokens so they match the workspace UI
+     in both light and dark mode. */
+  --nx-bg: var(--background);
+  --nx-panel: var(--card);
+  --nx-line: var(--border);
+  --nx-text: var(--foreground);
+  --nx-muted: var(--muted-foreground);
+  --nx-accent: var(--primary);
+  --nx-accent-strong: color-mix(in oklch, var(--primary) 82%, black);
+  --nx-on-accent: var(--primary-foreground);
+  --nx-glow: color-mix(in oklch, var(--primary) 14%, transparent);
+  background: var(--nx-bg);
+  color: var(--nx-text);
+}
+.dark .nx {
+  --nx-accent-strong: color-mix(in oklch, var(--primary) 82%, white);
+}
+.nx-glow {
+  background: radial-gradient(ellipse 60% 55% at 70% 0%, var(--nx-glow), transparent 70%);
+}
+.nx .nx-serif {
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.nx-grid {
+  background-image: radial-gradient(var(--nx-line) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 30%, transparent 75%);
+}
+@keyframes nx-type {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+.nx-reveal {
+  animation: nx-type 1.4s steps(48, end) 0.4s both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nx-reveal { animation: none; }
 }
 
 @utility bg-brand {

@@ -3,7 +3,8 @@
 import { useMemo, useState } from "react"
 import { PlusIcon, SearchIcon, TriangleAlertIcon } from "lucide-react"
 
-import { useRequireAuth } from "@/hooks/use-require-auth"
+import { useSession } from "@/lib/auth-client"
+import { Landing } from "@/components/nx/landing"
 import { UserMenu } from "@/components/auth/user-menu"
 import { Wordmark } from "@/components/brand"
 import { Input } from "@/components/ui/input"
@@ -42,7 +43,10 @@ function greeting() {
 }
 
 export default function Page() {
-  const { session, isPending } = useRequireAuth()
+  const { data: session, isPending } = useSession()
+
+  // Signed-out visitors see the landing page; signed-in users see their workspaces.
+  if (!isPending && !session) return <Landing />
 
   if (isPending || !session) {
     return (
