@@ -138,10 +138,10 @@ function SignInForm() {
         <footer className="flex items-center justify-between p-6 text-xs text-muted-foreground">
           <span>© 2026 NexusMind Studio</span>
           <a
-            href="mailto:support@nexusmind.com"
+            href="mailto:contact@sanjaysorathiya.dev"
             className="transition-colors hover:text-foreground"
           >
-            support@nexusmind.com
+            contact@sanjaysorathiya.dev
           </a>
         </footer>
       </div>
