@@ -2,17 +2,31 @@
 
 import { Suspense, useEffect, useState } from "react"
 import Link from "next/link"
+import {
+  FileTextIcon,
+  MessagesSquareIcon,
+  NetworkIcon,
+  ShieldCheckIcon,
+} from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
 
 import { signIn, useSession } from "@/lib/auth-client"
-import { Wordmark } from "@/components/brand"
-import { Button } from "@/components/ui/button"
+import { contactMailto, copyrightText, siteConfig } from "@/lib/config"
+import { NxLogo } from "@/components/nx/logo"
+import { NxShell } from "@/components/nx/shell"
+import { ModeToggle } from "@/components/ui/mode-toggle"
 import { Spinner } from "@/components/ui/spinner"
 
 const OAUTH_ERRORS: Record<string, string> = {
   access_denied: "Sign-in was cancelled.",
   oauth_callback_error: "Google couldn't complete sign-in. Please try again.",
 }
+
+const HIGHLIGHTS = [
+  { icon: FileTextIcon, title: "Bring your sources", body: "PDFs, websites and videos in one workspace." },
+  { icon: MessagesSquareIcon, title: "Chat with citations", body: "Grounded answers you can verify." },
+  { icon: NetworkIcon, title: "Memory that carries over", body: "Follow-ups pick up where you left off." },
+]
 
 function GoogleMark() {
   return (
@@ -69,45 +83,78 @@ function SignInForm() {
 
   if (isPending || session) {
     return (
-      <div className="grid min-h-svh place-items-center">
-        <Spinner className="size-5 text-muted-foreground" />
-      </div>
+      <NxShell className="grid place-items-center">
+        <Spinner className="size-5 text-nx-muted" />
+      </NxShell>
     )
   }
 
   return (
-    <div className="grid min-h-svh lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)]">
-      <div className="flex flex-col">
-        <header className="flex items-center justify-between p-6">
-          <Link href="/" aria-label="Home">
-            <Wordmark />
-          </Link>
-          <span className="font-mono text-[11px] tracking-wide text-muted-foreground/70">
-            v0.1
-          </span>
+    <NxShell className="grid lg:grid-cols-2">
+      <aside className="relative hidden flex-col justify-between overflow-hidden border-r border-nx-line p-10 lg:flex">
+        <div className="relative">
+          <NxLogo />
+        </div>
+
+        <div className="relative max-w-md">
+          <h2 className="nx-serif text-4xl leading-[1.12] font-medium tracking-tight text-balance">
+            Turn your sources into conversations.
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-nx-muted">
+            Upload your documents once, then ask questions in plain language.
+            Answers come with the exact passage they were drawn from.
+          </p>
+          <ul className="mt-9 space-y-5">
+            {HIGHLIGHTS.map(({ icon: Icon, title, body }) => (
+              <li key={title} className="flex items-start gap-3.5">
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-nx-accent/10 text-nx-accent">
+                  <Icon className="size-4.5" />
+                </span>
+                <div>
+                  <p className="text-sm font-medium">{title}</p>
+                  <p className="text-sm leading-relaxed text-nx-muted">
+                    {body}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <p className="relative text-xs text-nx-muted">
+          {copyrightText}
+        </p>
+      </aside>
+
+      <div className="flex flex-col bg-nx-panel/40">
+        <header className="flex items-center justify-between p-5 sm:p-6">
+          <div className="lg:invisible">
+            <NxLogo />
+          </div>
+          <ModeToggle />
         </header>
 
-        <main className="flex flex-1 items-center justify-center px-6 py-16">
-          <div className="w-full max-w-80">
-            <h1 className="font-heading text-2xl font-medium tracking-tight">
-              Sign in to NexusMind Studio
+        <main className="flex flex-1 items-center justify-center px-6 pb-16">
+          <div className="w-full max-w-sm">
+            <h1 className="nx-serif text-3xl font-medium tracking-tight">
+              Welcome back
             </h1>
-            <p className="mt-2 text-base leading-relaxed text-muted-foreground">
-              One account for every workspace, source, and conversation.
+            <p className="mt-2 text-base leading-relaxed text-nx-muted">
+              Sign in to open your workspaces. New here? Your account is created
+              the first time you continue.
             </p>
 
-            <Button
-              variant="outline"
-              size="lg"
-              className="mt-8 w-full"
+            <button
+              type="button"
               onClick={handleGoogleSignIn}
               disabled={isRedirecting}
+              className="mt-8 inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg border border-nx-line bg-nx-panel text-sm font-medium transition-colors hover:border-nx-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-nx-accent disabled:opacity-60"
             >
               {isRedirecting ? <Spinner /> : <GoogleMark />}
               {isRedirecting
                 ? "Redirecting to Google…"
                 : "Continue with Google"}
-            </Button>
+            </button>
 
             {error && (
               <p role="alert" className="mt-3 text-sm text-destructive">
@@ -115,18 +162,23 @@ function SignInForm() {
               </p>
             )}
 
-            <p className="mt-8 text-xs leading-relaxed text-muted-foreground">
+            <p className="mt-6 flex items-center gap-2 text-xs text-nx-muted">
+              <ShieldCheckIcon className="size-3.5 text-nx-accent" />
+              Your sources stay private to your account.
+            </p>
+
+            <p className="mt-8 text-xs leading-relaxed text-nx-muted">
               By continuing, you agree to our{" "}
               <Link
                 href="/terms"
-                className="underline underline-offset-4 transition-colors hover:text-foreground"
+                className="underline underline-offset-4 transition-colors hover:text-nx-text"
               >
                 Terms
               </Link>{" "}
               and{" "}
               <Link
                 href="/privacy"
-                className="underline underline-offset-4 transition-colors hover:text-foreground"
+                className="underline underline-offset-4 transition-colors hover:text-nx-text"
               >
                 Privacy Policy
               </Link>
@@ -135,38 +187,16 @@ function SignInForm() {
           </div>
         </main>
 
-        <footer className="flex items-center justify-between p-6 text-xs text-muted-foreground">
-          <span>© 2026 NexusMind Studio</span>
+        <footer className="p-5 text-xs text-nx-muted sm:p-6">
           <a
-            href="mailto:contact@sanjaysorathiya.dev"
-            className="transition-colors hover:text-foreground"
+            href={contactMailto}
+            className="transition-colors hover:text-nx-text"
           >
-            contact@sanjaysorathiya.dev
+            {siteConfig.contactEmail}
           </a>
         </footer>
       </div>
-
-      <aside className="relative hidden overflow-hidden border-l bg-muted/40 lg:block">
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 [background-image:radial-gradient(var(--border)_1px,transparent_1px)] [background-size:20px_20px]"
-        />
-        <div className="relative flex h-full flex-col justify-between p-10">
-          <span className="font-mono text-[11px] tracking-wide text-muted-foreground">
-            READ, ASK, REMEMBER
-          </span>
-          <div>
-            <p className="max-w-md font-heading text-3xl leading-snug font-medium tracking-tight text-balance">
-              Every source you feed it, one question away.
-            </p>
-            <p className="mt-4 max-w-sm text-base leading-relaxed text-muted-foreground">
-              NexusMind Studio grounds every answer in the documents you upload — no
-              guessing, no hallucinated citations.
-            </p>
-          </div>
-        </div>
-      </aside>
-    </div>
+    </NxShell>
   )
 }
 

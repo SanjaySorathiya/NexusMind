@@ -1,5 +1,6 @@
 import { BookOpenIcon } from "lucide-react"
 
+import { siteConfig } from "@/lib/config"
 import { cn } from "@/lib/utils"
 
 export function LogoMark({ className }: { className?: string }) {
@@ -24,7 +25,7 @@ export function Wordmark({ className }: { className?: string }) {
       )}
     >
       <LogoMark className="size-7 rounded-lg [&_svg]:size-4" />
-      NexusMind Studio
+      {siteConfig.name}
     </span>
   )
 }
