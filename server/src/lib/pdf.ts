@@ -1,11 +1,21 @@
 import { extractText, getDocumentProxy } from "unpdf";
-import { getSignedCloudinaryDownloadUrl } from "./cloudinary.js";
+import {
+  getPrivateCloudinaryDownloadUrl,
+  getSignedCloudinaryDownloadUrl,
+} from "./cloudinary.js";
 
 export type PdfExtractResult = {
   text: string;
   pages: string[];
   pageCount: number;
 };
+
+export class ScannedPdfError extends Error {
+  constructor() {
+    super("Scanned PDF not supported, please try with Normal text PDF");
+    this.name = "ScannedPdfError";
+  }
+}
 
 async function downloadPdf(url: string) {
   const response = await fetch(url);
@@ -38,7 +48,7 @@ export async function extractPdfFromBuffer(
   const joined = pages.filter(Boolean).join("\n\n");
 
   if (!joined) {
-    throw new Error("No text could be extracted from the PDF");
+    throw new ScannedPdfError();
   }
 
   return {
@@ -64,9 +74,10 @@ export async function extractPdfFromCloudinary(input: {
       throw error;
     }
 
+    const resourceType = input.resourceType ?? "raw";
     const signedUrl = getSignedCloudinaryDownloadUrl(
       input.publicId,
-      input.resourceType ?? "raw",
+      resourceType,
     );
 
     if (!signedUrl) {
@@ -75,7 +86,17 @@ export async function extractPdfFromCloudinary(input: {
       );
     }
 
-    const buffer = await downloadPdf(signedUrl);
-    return extractPdfFromBuffer(buffer);
+    try {
+      return await extractPdfFromBuffer(await downloadPdf(signedUrl));
+    } catch (signedError) {
+      // Signed CDN URLs are still blocked when PDF delivery is disabled on the
+      // account. The Admin API download endpoint is not affected.
+      const privateUrl = getPrivateCloudinaryDownloadUrl(
+        input.publicId,
+        resourceType,
+      );
+      if (!privateUrl) throw signedError;
+      return extractPdfFromBuffer(await downloadPdf(privateUrl));
+    }
   }
 }

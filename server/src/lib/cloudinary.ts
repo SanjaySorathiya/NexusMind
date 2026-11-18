@@ -8,6 +8,8 @@ import { ValidationError } from "../types/errors.js";
 const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
 const apiKey = process.env.CLOUDINARY_API_KEY;
 const apiSecret = process.env.CLOUDINARY_API_SECRET;
+// Production default. Set CLOUDINARY_FOLDER=nexusmind_local/pdfs in local .env.
+const uploadFolder = process.env.CLOUDINARY_FOLDER || "nexusmind/pdfs";
 
 /** Normalized result returned after a successful Cloudinary upload. */
 export type CloudinaryUploadResult = {
@@ -50,6 +52,33 @@ export function getSignedCloudinaryDownloadUrl(
 }
 
 /**
+ * Builds an authenticated Admin API download URL. Unlike CDN delivery URLs,
+ * this is not blocked by the "PDF and ZIP files delivery" account setting.
+ */
+export function getPrivateCloudinaryDownloadUrl(
+  publicId: string,
+  resourceType: "raw" | "image" = "raw",
+) {
+  if (!cloudName || !apiKey || !apiSecret) {
+    return null;
+  }
+
+  ensureConfigured();
+
+  const hasExtension = /\.pdf$/i.test(publicId);
+
+  return cloudinary.utils.private_download_url(
+    publicId,
+    hasExtension && resourceType === "raw" ? "" : "pdf",
+    {
+      resource_type: resourceType,
+      type: "upload",
+      expires_at: Math.floor(Date.now() / 1000) + 300,
+    },
+  );
+}
+
+/**
  * Uploads a PDF buffer to Cloudinary with a signed server-side request.
  *
  * Uses the account API key/secret, so no unsigned upload preset is required.
@@ -68,7 +97,7 @@ export async function uploadPdfToCloudinary(
   const result = await new Promise<UploadApiResponse>((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
       {
-        folder: "nexusmind/pdfs",
+        folder: uploadFolder,
         resource_type: "raw",
         filename_override: filename,
       },
