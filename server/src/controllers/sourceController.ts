@@ -22,7 +22,7 @@ import { getWorkspaceByIdForUser } from "../services/workspaceService.js";
 import { removeSourceFromIndex } from "./sourceChunkController.js";
 import { scrapeWebsite } from "../lib/firecrawl.js";
 import { uploadPdfToCloudinary } from "../lib/cloudinary.js";
-import { extractPdfFromBuffer } from "../lib/pdf.js";
+import { extractPdfFromBuffer, ScannedPdfError } from "../lib/pdf.js";
 import { fetchYoutubeTranscript } from "../lib/youtube.js";
 import { parseWorkspaceId } from "./workspaceController.js";
 import { enqueueSourceProcessing } from "../lib/sourceEvents.js";
@@ -161,15 +161,11 @@ export async function uploadPdf(req: Request, res: Response) {
   await checkQuota(req.session.user.id);
   await getWorkspaceByIdForUser(workspaceId, req.session.user.id);
 
-  const upload = await uploadPdfToCloudinary(
-    req.file.buffer,
-    req.file.originalname,
-  );
-
   let content: string | null = null;
   let pageCount: number | undefined;
   let pages: string[] | undefined;
 
+  // Extract BEFORE uploading so scanned PDFs never reach Cloudinary.
   try {
     const extracted = await extractPdfFromBuffer(req.file.buffer);
     content = extracted.text;
@@ -178,9 +174,18 @@ export async function uploadPdf(req: Request, res: Response) {
     // without re-downloading from Cloudinary (raw PDF delivery is blocked by
     // default on standard Cloudinary accounts).
     pages = extracted.pages;
-  } catch {
+  } catch (error) {
+    if (error instanceof ScannedPdfError) {
+      throw new ValidationError(error.message);
+    }
+    console.warn("Upload-time PDF extraction failed:", error);
     // Inngest will retry extraction from Cloudinary if upload-time parse fails.
   }
+
+  const upload = await uploadPdfToCloudinary(
+    req.file.buffer,
+    req.file.originalname,
+  );
 
   const source = await createAndProcessSource({
     workspaceId,
