@@ -35,7 +35,14 @@ export async function fetchYoutubeTranscript(url: string) {
     }
 
     return { videoId, content: full.slice(0, MAX_TRANSCRIPT_CHARS) };
-  } catch {
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      throw error;
+    }
+
+    // Log the real reason (IP block, captcha, disabled captions) for debugging.
+    console.error(`YouTube transcript fetch failed for ${videoId}:`, error);
+
     throw new ValidationError(
       "Could not fetch transcript. The video may not have captions.",
     );
