@@ -1,4 +1,7 @@
-import { YoutubeTranscript } from "youtube-transcript";
+import {
+  YoutubeTranscript,
+  YoutubeTranscriptDisabledError,
+} from "youtube-transcript";
 import { ValidationError } from "../types/errors.js";
 
 // TODO: Enhance this function to support multiple languages and handle cases where the transcript is not
@@ -41,7 +44,14 @@ export async function fetchYoutubeTranscript(url: string) {
     }
 
     // Log the real reason (IP block, captcha, disabled captions) for debugging.
+    // todo Transcript API service (Supadata, etc.)
     console.error(`YouTube transcript fetch failed for ${videoId}:`, error);
+
+    if (error instanceof YoutubeTranscriptDisabledError) {
+      throw new ValidationError(
+        "Transcript is disabled from youtube for this video",
+      );
+    }
 
     throw new ValidationError(
       "Could not fetch transcript. The video may not have captions.",
