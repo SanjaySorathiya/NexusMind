@@ -116,7 +116,7 @@ Import the repository twice in Vercel. Use these settings:
 
 ### Step 3: Deploy the API first
 
-Deploy the API project before the web project, because the web project needs the API URL. Note the deployment URL, for example `https://nexusmindapi.vercel.app`.
+Deploy the API project before the web project, because the web project needs the API URL. Note the deployment URL, for example `https://nexusmindapi.sanjaysorathiya.dev`.
 
 ### Step 4: Set environment variables for the API project
 
@@ -126,8 +126,8 @@ Add these in **Settings → Environment Variables** for the API project:
 | --- | --- |
 | `DATABASE_URL` | Your PostgreSQL connection string |
 | `BETTER_AUTH_SECRET` | Long random string |
-| `BETTER_AUTH_URL` | Your API URL, for example `https://nexusmindapi.vercel.app` |
-| `CLIENT_URL` | Your web URL, for example `https://www.nexusmind.sanjaysorathiya.dev` |
+| `BETTER_AUTH_URL` | Your API URL, for example `https://nexusmindapi.sanjaysorathiya.dev` |
+| `CLIENT_URL` | Your web URL, for example `https://nexusmind.sanjaysorathiya.dev` |
 | `GOOGLE_CLIENT_ID` | Google OAuth client ID |
 | `GOOGLE_CLIENT_SECRET` | Google OAuth client secret |
 | `OPENAI_API_KEY` | OpenAI key |
@@ -154,7 +154,7 @@ DATABASE_URL="postgresql://..." npx prisma migrate deploy
 ### Step 6: Connect Inngest
 
 1. Create an app in [Inngest Cloud](https://app.inngest.com/) and copy its event and signing keys into the API project (Step 4).
-2. In Inngest, sync the app with `https://nexusmindapi.vercel.app/api/inngest`.
+2. In Inngest, sync the app with `https://nexusmindapi.sanjaysorathiya.dev/api/inngest`.
 3. Confirm that the functions `process-source`, `summarize-conversation`, `generate-artifact` and `reap-stale-sources` appear.
 
 ### Step 7: Deploy the web project and set its variables
@@ -163,7 +163,7 @@ Add this variable to the web project, then deploy:
 
 | Variable | Value |
 | --- | --- |
-| `API_ORIGIN` | Your API URL, for example `https://nexusmindapi.vercel.app` |
+| `API_ORIGIN` | Your API URL, for example `https://nexusmindapi.sanjaysorathiya.dev` |
 | `NEXT_PUBLIC_WEB3FORMS_KEY` | Optional, for the feedback form |
 
 > Do not set `NEXT_PUBLIC_API_URL` in production. The browser calls `/api/*` on the web domain, and Next.js forwards those requests to `API_ORIGIN`.
@@ -172,12 +172,12 @@ Add this variable to the web project, then deploy:
 
 In Google Cloud Console, add your production values:
 
-- **Authorized JavaScript origins:** your web URL (for example `https://www.nexusmind.sanjaysorathiya.dev`)
-- **Authorized redirect URIs:** `https://nexusmindapi.vercel.app/api/auth/callback/google`
+- **Authorized JavaScript origins:** your web URL (for example `https://nexusmind.sanjaysorathiya.dev`)
+- **Authorized redirect URIs:** `https://nexusmindapi.sanjaysorathiya.dev/api/auth/callback/google`
 
 ### Step 9: (Optional) Add a custom domain
 
-1. In the web project, go to **Settings → Domains** and add your domain (for example `www.nexusmind.sanjaysorathiya.dev`).
+1. In the web project, go to **Settings → Domains** and add your domain (for example `nexusmind.sanjaysorathiya.dev`).
 2. Add the DNS record Vercel shows you at your DNS provider.
 3. Update `CLIENT_URL` in the API project, and the Google OAuth origins, to the new domain. Redeploy the API.
 
@@ -222,7 +222,7 @@ In Google Cloud Console, add your production values:
 
 ## Post-Deploy Checklist
 
-- [ ] `https://nexusmindapi.vercel.app/health` returns OK
+- [ ] `https://nexusmindapi.sanjaysorathiya.dev/health` returns OK
 - [ ] The web app loads and the Google sign-in completes
 - [ ] You can create a workspace
 - [ ] Uploading a PDF or importing a website moves the source to `READY`

@@ -3,8 +3,8 @@
 **A full-stack AI research workspace built on Retrieval-Augmented Generation (RAG).**
 Bring your own sources (PDFs, websites, YouTube videos, text and Markdown) and chat with them. Answers are grounded in your sources and include citations, and you can generate study artifacts from the same material.
 
-[![Live App](https://img.shields.io/badge/Live_App-nexusmind.sanjaysorathiya.dev-1a73e8?style=flat-square&logo=vercel)](https://www.nexusmind.sanjaysorathiya.dev)
-[![API](https://img.shields.io/badge/API-nexusmindapi.vercel.app-34a853?style=flat-square&logo=vercel)](https://nexusmindapi.vercel.app/health)
+[![Live App](https://img.shields.io/badge/Live_App-nexusmind.sanjaysorathiya.dev-1a73e8?style=flat-square&logo=vercel)](https://nexusmind.sanjaysorathiya.dev)
+[![API](https://img.shields.io/badge/API-nexusmindapi.sanjaysorathiya.dev-34a853?style=flat-square&logo=vercel)](https://nexusmindapi.sanjaysorathiya.dev/health)
 
 ![Node](https://img.shields.io/badge/Node.js-22-339933?style=flat-square&logo=node.js)
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
@@ -42,8 +42,8 @@ NexusMind groups knowledge into **workspaces**. Each workspace holds its own sou
 
 | Component | Location | Production URL |
 | --- | --- | --- |
-| Frontend (Next.js) | [`client/`](client/README.md) | https://www.nexusmind.sanjaysorathiya.dev *(custom domain coming soon)* |
-| Backend API (Express) | [`server/`](server/README.md) | https://nexusmindapi.vercel.app |
+| Frontend (Next.js) | [`client/`](client/README.md) | https://nexusmind.sanjaysorathiya.dev |
+| Backend API (Express) | [`server/`](server/README.md) | https://nexusmindapi.sanjaysorathiya.dev |
 
 ## 2. Key Features
 
@@ -61,7 +61,7 @@ NexusMind groups knowledge into **workspaces**. Each workspace holds its own sou
 
 ## 3. Screenshots
 
-> Syatem screenshots in `.Notes/screenshots/`.
+> System screenshots in `.Notes/screenshots/`.
 
 | Landing | Workspaces |
 | --- | --- |

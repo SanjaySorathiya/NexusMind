@@ -2,7 +2,7 @@
 
 The Next.js 16 (App Router) web client for NexusMind. Users manage workspaces, add sources, chat with their knowledge base using streaming RAG answers, and generate Studio artifacts.
 
-**Production:** https://www.nexusmind.sanjaysorathiya.dev *(custom domain coming soon)*
+**Production:** https://nexusmind.sanjaysorathiya.dev
 
 ← [Back to main README](../README.md)
 
@@ -90,7 +90,7 @@ Each feature follows the same convention: `api.ts` (fetchers), `hooks.ts` (TanSt
 ```mermaid
 flowchart LR
     B[Browser] -->|"/api/*"| N[Next.js on Vercel]
-    N -->|"rewrite via API_ORIGIN"| S[Express API<br/>nexusmindapi.vercel.app]
+    N -->|"rewrite via API_ORIGIN"| S[Express API<br/>nexusmindapi.sanjaysorathiya.dev]
 ```
 
 In production, `next.config.ts` rewrites `/api/*` to the backend. To the browser, the frontend and the API share one origin, so auth cookies work without third-party cookie issues. In local development, the client calls `NEXT_PUBLIC_API_URL` directly.
@@ -128,7 +128,7 @@ npm run dev          # http://localhost:3001
 ## 9. Deployment
 
 - Deployed on **Vercel** as a Next.js project.
-- Set `API_ORIGIN=https://nexusmindapi.vercel.app` in the Vercel project settings.
+- Set `API_ORIGIN=https://nexusmindapi.sanjaysorathiya.dev` in the Vercel project settings.
 - Add the frontend domain to the backend's `CLIENT_URL`, and to the Google OAuth authorized origins and redirect URIs.
 - Full step-by-step Vercel setup and custom domain steps: see the [Deployment Guide](../DEPLOY.md#vercel-deployment).
 - Docker: `output: "standalone"` produces a self-contained image (`client/Dockerfile`). The root `docker-compose.yml` builds it with `API_ORIGIN` set to the API container. See the [Docker section](../DEPLOY.md#docker-self-hosting).

@@ -2,7 +2,7 @@
 
 The Express 5 + TypeScript API behind NexusMind. It handles authentication, workspaces, source ingestion, RAG chat streaming, memory and artifact generation. Long-running work runs in durable **Inngest** jobs.
 
-**Production:** https://nexusmindapi.vercel.app · **Health check:** [`/health`](https://nexusmindapi.vercel.app/health)
+**Production:** https://nexusmindapi.sanjaysorathiya.dev · **Health check:** [`/health`](https://nexusmindapi.sanjaysorathiya.dev/health)
 
 ← [Back to main README](../README.md)
 
@@ -228,7 +228,7 @@ npx inngest-cli@latest dev -u http://localhost:8080/api/inngest
 The API is deployed to **Vercel** as a single serverless function (`api/index.ts`). In [`vercel.json`](vercel.json), every path is rewritten to that function, which has a 60 s max duration.
 
 - Set all production env vars in Vercel, and remove `INNGEST_DEV`.
-- Point the Inngest app at `https://nexusmindapi.vercel.app/api/inngest`.
+- Point the Inngest app at `https://nexusmindapi.sanjaysorathiya.dev/api/inngest`.
 - Run `npx prisma migrate deploy` against the production database before releasing schema changes.
 - Full step-by-step Vercel setup, Google OAuth and Inngest steps: see the [Deployment Guide](../DEPLOY.md#vercel-deployment).
 - Docker: the image is built from `server/Dockerfile`. The root `docker-compose.yml` starts it together with PostgreSQL and the client. See the [Docker section](../DEPLOY.md#docker-self-hosting).
