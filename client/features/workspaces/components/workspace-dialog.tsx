@@ -119,7 +119,7 @@ export function WorkspaceDialog({
             {isEdit ? "Edit workspace" : "New workspace"}
           </DialogTitle>
           <DialogDescription>
-            A home for one topic — its sources, chats, and study material.
+            A home for one topic - its sources, chats, and study material.
           </DialogDescription>
         </DialogHeader>
 

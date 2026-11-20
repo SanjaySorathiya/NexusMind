@@ -5,10 +5,12 @@ Bring your own sources (PDFs, websites, YouTube videos, text and Markdown) and c
 
 [![Live App](https://img.shields.io/badge/Live_App-nexusmind.sanjaysorathiya.dev-1a73e8?style=flat-square&logo=vercel)](https://www.nexusmind.sanjaysorathiya.dev)
 [![API](https://img.shields.io/badge/API-nexusmindapi.vercel.app-34a853?style=flat-square&logo=vercel)](https://nexusmindapi.vercel.app/health)
+
+![Node](https://img.shields.io/badge/Node.js-22-339933?style=flat-square&logo=node.js)
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
 ![Express](https://img.shields.io/badge/Express-5-555?style=flat-square&logo=express)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=flat-square&logo=typescript)
-![Node](https://img.shields.io/badge/Node.js-22-339933?style=flat-square&logo=node.js)
+
 
 ![NexusMind architecture overview](.Notes/Architecture-Overview.png)
 
@@ -48,7 +50,7 @@ NexusMind groups knowledge into **workspaces**. Each workspace holds its own sou
 | Area | Capability |
 | --- | --- |
 | **Workspaces** | Isolated, per-user knowledge spaces for sources, chats and artifacts |
-| **Multi-source ingestion** | PDF upload, website URL import, YouTube transcripts, pasted Text and Markdown |
+| **Multi-source ingestion** | PDF upload, website URL import, YouTube links, Markdown and Text  |
 | **Background processing** | Durable Inngest pipeline (extract → chunk → embed → index) with retries and a stale-job reaper |
 | **Grounded RAG chat** | Streaming answers with source citations `[1]`, `[2]` and per-workspace vector search |
 | **Web search (opt-in)** | Live web context through Tavily, cited separately as `[W1]`, `[W2]` |
@@ -59,7 +61,7 @@ NexusMind groups knowledge into **workspaces**. Each workspace holds its own sou
 
 ## 3. Screenshots
 
-> Save screenshots in `.Notes/screenshots/`.
+> Syatem screenshots in `.Notes/screenshots/`.
 
 | Landing | Workspaces |
 | --- | --- |
@@ -215,14 +217,12 @@ NexusMind supports two deployment paths. The full step-by-step guide is in **[DE
 | [Client README](client/README.md) | Frontend architecture, routes, feature modules, state and data fetching, environment variables |
 | [Deployment Guide](DEPLOY.md) | Docker self-hosting and Vercel deployment, environment variables and post-deploy checklist |
 
-## 11. Roadmap
+## 11. Next version Roadmap
 
-- [ ] Custom domain rollout (`www.nexusmind.sanjaysorathiya.dev`)
-- [ ] Additional source types (DOCX, PPTX, audio)
-- [ ] Workspace sharing and collaboration
+- [ ] Additional source types (Audio, DOCX, PPTX)
 - [ ] Hybrid search (keyword + vector) and re-ranking
-- [ ] Artifact export (PDF / Anki / Markdown)
+- [ ] Workspace sharing and collaboration
+- [ ] Artifact export (PDF / Markdown)
 - [ ] Usage dashboard and paid quota tiers
-- [ ] Automated test suite and CI pipeline
 
 

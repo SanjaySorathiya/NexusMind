@@ -27,7 +27,7 @@ const SOURCES = [
   { icon: FileTextIcon, label: "PDF documents" },
   { icon: GlobeIcon, label: "Web pages" },
   { icon: PlayIcon, label: "YouTube videos" },
-  { icon: TypeIcon, label: "Pasted text" },
+  { icon: TypeIcon, label: "Text/Markdown" },
 ]
 
 const FEATURES = [
