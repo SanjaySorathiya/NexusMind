@@ -275,7 +275,7 @@ export function ChatPanel({
               <SparklesIcon className="size-5" />
             </span>
             <p className="mt-3 font-sans text-3xl font-semibold tracking-tight text-balance">
-              Ask {workspace.title} anything
+              Ask {workspace.title} workspace
             </p>
             <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
               Answers come with citations pointing back to your sources.
@@ -333,6 +333,9 @@ export function ChatPanel({
             invalidateLists()
           }}
         />
+        <p className="mt-2 text-center text-xs text-muted-foreground">
+          NexusMind is AI and can make mistakes. Check important info.
+        </p>
       </footer>
 
       <SourceDetailDialog

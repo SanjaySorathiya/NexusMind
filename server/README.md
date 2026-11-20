@@ -96,7 +96,7 @@ All routes except `/`, `/health`, `/api/auth/*` and `/api/inngest` require an au
 | POST | `/pdf` | Upload a PDF (multipart) |
 | POST | `/website` | Import a website URL |
 | POST | `/youtube` | Import a YouTube transcript |
-| POST | `/text-markdown` | Add pasted Text or Markdown |
+| POST | `/text-markdown` | Add Markdown or Text  |
 | POST | `/:sourceId/retry` | Retry a failed source |
 | POST | `/bulk-delete` | Delete multiple sources |
 | GET | `/:sourceId` | Get a source |
